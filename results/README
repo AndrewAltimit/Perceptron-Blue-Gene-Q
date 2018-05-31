@@ -1,0 +1,16 @@
+Format:
+num ranks, neurons/layer, file I/O time, training time, ...
+sample sharing, forward prop, bcast, backprop, reduce, ...
+sample sharing, forward prop, bcast, backprop, reduce, ...
+
+The times in columns 5-9 correspond to the sum of the maximum times across ranks for sample sharing, forward propagation, Bcast operations, backward propagation, and Reduce operations respectively. The times in columns 10-14 correspond to the sum of the minimum times across ranks for the same things.
+That is, in each iteration the program timed parts of the algorithm. At the end, it used reduce operations to take the minimum and maximum times across ranks for each iteration. It then summed the times across all iterations (2000 total).
+
+Files:
+exp_bgq[N] - times from runs on the BG/Q with N ranks per node
+... some of these runs timed out (>50min)
+exp_bgq[N]_io - same as above but each rank loads its own entire copy of the input file
+... some of these runs received out of memory errors
+exp_kratos - times from runs on Kratos
+exp_kratos_async - same as above but using non-blocking communications (Ibcast and Ireduce)
+
